@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cocktail;
+use App\Models\Technique;
 use Illuminate\Http\Request;
 
 class CocktailController extends Controller
@@ -26,7 +27,8 @@ class CocktailController extends Controller
      */
     public function create()
     {
-        return view('admin.cocktails.create');
+        $techniques = Technique::all();
+        return view('admin.cocktails.create', compact('techniques'));
     }
 
     /**
@@ -37,7 +39,14 @@ class CocktailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->validate([
+            'name' => ['required', 'unique:cocktails', 'max:255'],
+            'technique' => ['required', 'max:255']
+        ]);
+        
+        $new_cocktail = Cocktail::create($form_data);
+
+        return redirect()->route('admin.cocktails.index')->with('message', "$new_cocktail->name è stato creato con successo");
     }
 
     /**

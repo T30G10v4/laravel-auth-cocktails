@@ -13,8 +13,12 @@
             </div>
 
             <div class="mb-3">
-                <label for="technique">Tecnica</label>
-                <input type="text" id="technique" name="technique" class="form-control">
+                <select name="technique" id="technique">
+                    <option value="">Seleziona una tecnica</option>
+                    @foreach ($techniques as $technique)
+                        <option value="{{ $technique->code }}">{{ $technique->name }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <button type="submit" class="btn btn-primary">Aggiungi</button>

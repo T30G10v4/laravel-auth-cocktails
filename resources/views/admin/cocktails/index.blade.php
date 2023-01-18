@@ -6,6 +6,10 @@
 
 <a href="{{ route('admin.cocktails.create') }}" class="btn btn-primary">Crea un nuovo cocktail</a>
 
+@if (session('message'))
+    {{ session('message') }}
+@endif
+
 <ul>
     @foreach ($cocktails as $cocktail)
     <li>
