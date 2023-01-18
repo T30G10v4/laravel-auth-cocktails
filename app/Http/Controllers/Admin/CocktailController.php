@@ -26,7 +26,7 @@ class CocktailController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.cocktails.create');
     }
 
     /**
@@ -46,9 +46,9 @@ class CocktailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cocktail $cocktail)
     {
-        //
+        return view('admin.cocktails.show', compact('cocktail'));
     }
 
     /**

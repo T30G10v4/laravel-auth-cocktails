@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Cocktail extends Model
 {
     use HasFactory;
+
+    public function technique(){
+        return $this->belongsTo(Technique::class, 'technique', 'code');
+    }
 }

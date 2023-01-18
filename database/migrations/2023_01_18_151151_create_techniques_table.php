@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cocktails', function (Blueprint $table) {
+        Schema::create('techniques', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->id();
+            $table->string('code')->primary();
+            $table->string('name', 150);
             $table->timestamps();
-            $table->string('name')->unique();
-            $table->string('technique');
-             
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cocktails');
+        Schema::dropIfExists('techniques');
     }
 };

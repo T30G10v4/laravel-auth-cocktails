@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cocktails', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->id();
-            $table->timestamps();
-            $table->string('name')->unique();
-            $table->string('technique');
-             
+        Schema::table('cocktails', function (Blueprint $table) {
+            /* $table->string('technique')->nullable()->change(); */
+            $table->foreign('technique')->references('code')->on('techniques')->restrictOnDelete();
         });
     }
 
@@ -30,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cocktails');
+        Schema::table('cocktails', function (Blueprint $table) {
+            $table->dropForeign('cocktails_technique_foreign');
+        });
     }
 };
