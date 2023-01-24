@@ -21,6 +21,16 @@
                 </select>
             </div>
 
+            <div class="mb-3">
+                @foreach  ($ingredients as $key=>$ingredient)
+                    <label for="ingredients-{{$ingredient->id}}"> {{ $ingredient->name }}</label>
+                    <input value="{{$ingredient->id}}" type="checkbox" name="ingredients[{{$key}}][id]" id="ingredients-{{$ingredient->id}}">
+
+                    <input type="number" value="{{ $ingredient->quantity }}" name="ingredients[{{$key}}][quantity]" >
+                @endforeach
+            </div>
+
+            
             <button type="submit" class="btn btn-primary">Aggiungi</button>
         </form>
     </div>

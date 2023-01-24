@@ -13,4 +13,8 @@ class Cocktail extends Model
     public function technique(){
         return $this->belongsTo(Technique::class, 'technique', 'code');
     }
+
+    public function ingredients(){
+        return $this->belongsToMany(Ingredient::class);
+    }
 }

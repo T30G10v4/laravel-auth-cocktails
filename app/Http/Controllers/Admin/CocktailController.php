@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cocktail;
+use App\Models\Ingredient;
 use App\Models\Technique;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class CocktailController extends Controller
     public function create()
     {
         $techniques = Technique::all();
-        return view('admin.cocktails.create', compact('techniques'));
+        $ingredients = Ingredient::all();
+        return view('admin.cocktails.create', compact('techniques','ingredients'));
     }
 
     /**
@@ -41,11 +43,27 @@ class CocktailController extends Controller
     {
         $form_data = $request->validate([
             'name' => ['required', 'unique:cocktails', 'max:255'],
-            'technique' => ['required', 'max:255']
+            'technique' => ['required', 'max:255'],
+            'ingredients.*.id' => ['exists:ingredients,id', 'nullable'],
+            'ingredients.*.quantity' => ['nullable']
+
         ]);
         
         $new_cocktail = Cocktail::create($form_data);
 
+        // $temp = [];
+
+        foreach($form_data['ingredients'] as $ingredient ){
+            if(isset($ingredient['id'])  && $ingredient['quantity']){
+                // $temp[] = $ingredient;
+                $new_cocktail->ingredients()->attach([
+                    $ingredient['id'] => [
+                        'quantity' => $ingredient['quantity']
+                    ]
+                ]);
+            }
+        }
+        // dd($temp);
         return redirect()->route('admin.cocktails.index')->with('message', "$new_cocktail->name è stato creato con successo");
     }
 
